@@ -4,7 +4,6 @@ on:
   push:			
     branches: [ "main" ]
 
-# 본인이 설정한 값으로 입력해야 함
 env:		
   AWS_REGION: ap-northeast-2
   S3_BUCKET_NAME: myanjini-cicd-bucket
@@ -39,7 +38,6 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ${{ env.AWS_REGION }}
 
-    # https://docs.aws.amazon.com/cli/latest/reference/deploy/push.html
     - name: Upload to AWS S3
       run: |
         aws deploy push \
@@ -48,7 +46,7 @@ jobs:
           --s3-location s3://$S3_BUCKET_NAME/$GITHUB_SHA.zip \
           --source . 
 
-    # https://docs.aws.amazon.com/cli/latest/reference/deploy/create-deployment.html
+ 
     - name: Deploy to AWS EC2 from S3
       run: |
         aws deploy create-deployment \
